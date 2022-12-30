@@ -7,9 +7,11 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 
 public class Handler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
-    private static final String SUCCESSFUL = "{\n" +
-            "              \"hello\": \"world\"\n" +
-            "            }";
+    private static final String SUCCESSFUL = """
+            {
+              "hello": "world"
+            }
+            """;
 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
