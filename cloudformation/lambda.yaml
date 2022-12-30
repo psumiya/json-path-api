@@ -8,7 +8,7 @@ Resources:
     Properties:
       CodeUri: s3://sumiya/lambdas/json-path/json-path-api-1.0-SNAPSHOT.zip
       Handler: com.sumiya.Handler::handleRequest
-      Runtime: java11
+      Runtime: provided.al2
       Description: Java function
       MemorySize: 512
       Timeout: 10
