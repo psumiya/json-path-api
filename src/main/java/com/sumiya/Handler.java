@@ -7,16 +7,18 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 
 public class Handler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
-    private static final String SUCCESSFUL = """
-            {
-              "hello": "world"
-            }
-            """;
+    private final JsonPathEvaluator jsonPathEvaluator;
+
+    public Handler() {
+        this.jsonPathEvaluator = new JsonPathEvaluator();
+    }
 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
-        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
-        return response.withBody(SUCCESSFUL).withStatusCode(200);
+        String result = jsonPathEvaluator.evaluate(input.getBody());
+        return new APIGatewayProxyResponseEvent()
+                .withBody(result)
+                .withStatusCode(200);
     }
 
 }

@@ -1,0 +1,5 @@
+{
+  "jsonToEvaluate" : "[\n            {\n               \"foo\" : \"foo1\",\n               \"bar\" : \"bar1\"\n            }\n            {\n               \"foo\" : \"foo2\"\n            }\n       ]",
+  "pathExpression" : "$[*].bar",
+  "jsonPathOptions" : ["DEFAULT_PATH_LEAF_TO_NULL"]
+}
