@@ -19,7 +19,7 @@ export S3_KEY=lambdas/json-path
 # Upload the built zip to S3
 aws s3 cp JsonPathEvaluator.zip s3://$S3_BUCKET/$S3_KEY/JsonPathEvaluator.zip
 
-# Create stack - this creates the Lambda function
+# Create stack - this creates the Lambda function and the API Gateway endpoint (note it down)
 sam deploy --s3-bucket $S3_BUCKET --stack-name $STACK_NAME --capabilities CAPABILITY_IAM --template-file cloudformation/template.yaml
 
 # (Optional) Update function after re-uploading a newly built zip
@@ -29,16 +29,30 @@ aws lambda update-function-code --function-name JsonPathEvaluator --s3-bucket $S
 aws cloudformation delete-stack --stack-name $STACK_NAME
 ----
 
-== API Endpoint
+== Test the API Endpoint
 
-Outside the template, a custom API domain was manually setup with the right certificate, and corresponding Route 53 records were created to route requests to this custom domain.
+Replace the endpoint with the newly generated api in the below command and test.
+----
+curl -X POST https://83dypaxnz0.execute-api.us-west-2.amazonaws.com/dev/jsonpath -H "Content-Type: application/json" -d \
+'{
+  "jsonToEvaluate" : "[{\"foo\" : \"foo1\",\"bar\" : \"bar1\"}{\"foo\" : \"foo2\"}]",
+  "pathExpression" : "$[*].bar",
+  "jsonPathOptions" : ["SUPPRESS_EXCEPTIONS","ALWAYS_RETURN_LIST"]
+}'
+----
 
-The API is currently deployed here: `https://jsonpath.sumiya.page/jsonpath`.
+== Customizing the API Endpoint
+
+Beyond the template used in this repo, it is possible to further customize the API.
+
+For example, a custom API domain was manually setup with the right certificate, and corresponding Route 53 records were created to route requests to this custom domain.
+
+That customized API is currently deployed here: `https://jsonpath.sumiya.page/jsonpath`. An API Key is needed to invoke this endpoint.
 
 Sample curl:
 
 ----
-curl -X POST https://jsonpath.sumiya.page/jsonpath -H "Content-Type: application/json" -d \
+curl -X POST https://jsonpath.sumiya.page/jsonpath -H 'X-API-Key: <insert-api-key-here>' -H "Content-Type: application/json" -d \
 '{
   "jsonToEvaluate" : "[{\"foo\" : \"foo1\",\"bar\" : \"bar1\"}{\"foo\" : \"foo2\"}]",
   "pathExpression" : "$[*].bar",
