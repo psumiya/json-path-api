@@ -4,11 +4,11 @@ Wrapper to invoke https://github.com/json-path/JsonPath methods via HTTP.
 
 == Build and Deploy Commands
 
-To build and deploy into your own account, follow this:
+To build and deploy into your own AWS account, follow this:
 
 [source]
 ----
-# Build the zip file that contains the artifacts necessary for the Lambda
+# Build the zip file that contains the artifacts necessary for the Lambda (you need Docker for this to run successfully)
 ./build.sh
 
 # Set S3 bucket and object where the zip will be uploaded
@@ -25,7 +25,7 @@ sam deploy --s3-bucket $S3_BUCKET --stack-name $STACK_NAME --capabilities CAPABI
 # (Optional) Update function after re-uploading a newly built zip
 aws lambda update-function-code --function-name JsonPathEvaluator --s3-bucket $S3_BUCKET --s3-key $S3_KEY/JsonPathEvaluator.zip
 
-# Delete stack
+# Delete stack once you are done
 aws cloudformation delete-stack --stack-name $STACK_NAME
 ----
 
@@ -59,3 +59,6 @@ curl -X POST https://jsonpath.sumiya.page/jsonpath -H 'X-API-Key: <insert-api-ke
   "jsonPathOptions" : ["SUPPRESS_EXCEPTIONS","ALWAYS_RETURN_LIST"]
 }'
 ----
+
+== Runtime Evolution
+I wrote about how the JRE for this project evolved from Java 11 to a custom Java 19 runtime here: https://sumiya.page/aws-lambda-custom-runtime-with-java-and-gradle.html
