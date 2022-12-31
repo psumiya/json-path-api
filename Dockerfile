@@ -18,8 +18,6 @@ COPY . json-path-api
 WORKDIR json-path-api
 RUN ./gradlew clean shadowJar
 
-RUN ls build
-
 # Find JDK module dependencies dynamically from the uber jar
 RUN jdeps -q \
     --ignore-missing-deps \
@@ -40,12 +38,12 @@ RUN jlink --verbose \
 # It creates the file /jre19-slim/lib/server/classes.jsa
 RUN /jre19-slim/bin/java -Xshare:dump
 
-# Package everything together into a custom runtime archive
+# Package everything together into a custom runtime archive, JsonPathEvaluator.zip
 WORKDIR /
 COPY bootstrap bootstrap
 RUN chmod 755 bootstrap
-RUN cp json-path-api/build/libs/json-path-api-1.0-SNAPSHOT-all.jar json-path-api-1.0-SNAPSHOT-all.jar
-RUN zip -r json-path-api-1.0-SNAPSHOT.zip \
+RUN cp json-path-api/build/libs/json-path-api-1.0-SNAPSHOT-all.jar json-path-api-all.jar
+RUN zip -r JsonPathEvaluator.zip \
     bootstrap \
-    json-path-api-1.0-SNAPSHOT-all.jar \
+    json-path-api-all.jar \
     /jre19-slim

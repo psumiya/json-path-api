@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Lambda application that wraps the JsonPath Api.
+
+Resources:
+
+  JsonPathAPIGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+      Name: json-path-api-gateway
+
+  JsonPathLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: JsonPathEvaluator
+      CodeUri: s3://sumiya/lambdas/json-path/JsonPathEvaluator.zip
+      Handler: com.sumiya.Handler::handleRequest
+      Runtime: provided.al2
+      Description: Java function
+      MemorySize: 512
+      Timeout: 10
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Events:
+        ApiEvents:
+          Type: Api
+          Properties:
+            Path: /jsonpath
+            Method: POST
+            RestApiId: !Ref JsonPathAPIGateway
+
+Outputs:
+  JsonPathEndpoint:
+    Description: JsonPath Evaluator API Gateway Endpoint
+    Value:
+      Fn::Sub: https://${JsonPathAPIGateway}.execute-api.${AWS::Region}.amazonaws.com/dev/jsonpath

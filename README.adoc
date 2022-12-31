@@ -1,3 +1,47 @@
 = Json Path API
 
-Wrapper to invoke https://github.com/json-path/JsonPath via HTTP.
+Wrapper to invoke https://github.com/json-path/JsonPath methods via HTTP.
+
+== Build and Deploy Commands
+
+To build and deploy into your own account, follow this:
+
+[source]
+----
+# Build the zip file that contains the artifacts necessary for the Lambda
+./build.sh
+
+# Set S3 bucket and object where the zip will be uploaded
+export STACK_NAME=json-path-api-custom-j19
+export S3_BUCKET=sumiya
+export S3_KEY=lambdas/json-path
+
+# Upload the built zip to S3
+aws s3 cp JsonPathEvaluator.zip s3://$S3_BUCKET/$S3_KEY/JsonPathEvaluator.zip
+
+# Create stack - this creates the Lambda function
+sam deploy --s3-bucket $S3_BUCKET --stack-name $STACK_NAME --capabilities CAPABILITY_IAM --template-file cloudformation/template.yaml
+
+# (Optional) Update function after re-uploading a newly built zip
+aws lambda update-function-code --function-name JsonPathEvaluator --s3-bucket $S3_BUCKET --s3-key $S3_KEY/JsonPathEvaluator.zip
+
+# Delete stack
+aws cloudformation delete-stack --stack-name $STACK_NAME
+----
+
+== API Endpoint
+
+Outside the template, a custom API domain was manually setup with the right certificate, and corresponding Route 53 records were created to route requests to this custom domain.
+
+The API is currently deployed here: `https://jsonpath.sumiya.page/jsonpath`.
+
+Sample curl:
+
+----
+curl -X POST https://jsonpath.sumiya.page/jsonpath -H "Content-Type: application/json" -d \
+'{
+  "jsonToEvaluate" : "[{\"foo\" : \"foo1\",\"bar\" : \"bar1\"}{\"foo\" : \"foo2\"}]",
+  "pathExpression" : "$[*].bar",
+  "jsonPathOptions" : ["SUPPRESS_EXCEPTIONS","ALWAYS_RETURN_LIST"]
+}'
+----

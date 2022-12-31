@@ -5,4 +5,4 @@ $LAMBDA_TASK_ROOT/jre19-slim/bin/java \
     -XX:+TieredCompilation \
     -XX:TieredStopAtLevel=1 \
     -XX:+UseSerialGC \
-    -jar json-path-api-1.0-SNAPSHOT-all.jar "$_HANDLER"
+    -jar json-path-api-all.jar "$_HANDLER"
