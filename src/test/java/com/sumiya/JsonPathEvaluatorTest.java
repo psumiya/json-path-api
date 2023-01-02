@@ -1,12 +1,7 @@
 package com.sumiya;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.Option;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -51,16 +46,6 @@ public class JsonPathEvaluatorTest {
         String evaluated = fixture.evaluate(json);
         assertEquals("""
                 {"message":"Path must not end with a '.' or '..'","errorContext":{"context":"Unexpected error occurred while evaluating jsonPath."}}""", evaluated);
-    }
-
-    public static void main(String[] args) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Set<Option> alwaysReturnList = Set.of(
-                Option.ALWAYS_RETURN_LIST,
-                Option.DEFAULT_PATH_LEAF_TO_NULL,
-                Option.SUPPRESS_EXCEPTIONS
-        );
-        System.out.println(objectMapper.writeValueAsString(alwaysReturnList));
     }
 
 }
