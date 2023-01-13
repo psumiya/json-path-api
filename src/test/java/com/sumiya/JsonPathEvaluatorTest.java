@@ -22,6 +22,7 @@ public class JsonPathEvaluatorTest {
                 ["bar1",null]"""),
                 arguments(DEFAULT_ROOT + "withoutOptions.json", """
                 {"hello":"world"}"""),
+                arguments(DEFAULT_ROOT + "missingPathSuppressException.json", "[]"),
                 arguments(DEFAULT_ROOT + "badExpression.json", """
                 {"message":"Path must not end with a '.' or '..'","errorContext":{"context":"Unexpected error occurred while evaluating jsonPath."}}""")
         );

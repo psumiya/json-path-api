@@ -1,0 +1,5 @@
+{
+  "jsonToEvaluate" : "{\"hello\": \"world\"}",
+  "pathExpression" : "$..does_not_exist",
+  "jsonPathOptions" : ["SUPPRESS_EXCEPTIONS","ALWAYS_RETURN_LIST"]
+}
