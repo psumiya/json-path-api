@@ -31,14 +31,18 @@ public class JsonPathEvaluator {
         }
 
         try {
-            Object evaluationResult = maybeConfiguration.map(configuration -> JsonPath
-                            .using(configuration)
-                            .parse(jsonEvaluatorRequest.jsonToEvaluate())
-                            .read(jsonEvaluatorRequest.pathExpression()))
-                    .orElse(JsonPath
-                            .parse(jsonEvaluatorRequest.jsonToEvaluate())
-                            .read(jsonEvaluatorRequest.pathExpression()));
-            return DEFAULT_MAPPER.writeValueAsString(evaluationResult);
+            Object evaluationResult;
+            if (maybeConfiguration.isPresent()) {
+                evaluationResult = JsonPath
+                        .using(maybeConfiguration.get())
+                        .parse(jsonEvaluatorRequest.jsonToEvaluate())
+                        .read(jsonEvaluatorRequest.pathExpression());
+            } else {
+                evaluationResult = JsonPath
+                        .parse(jsonEvaluatorRequest.jsonToEvaluate())
+                        .read(jsonEvaluatorRequest.pathExpression());
+            }
+            return evaluationResult == null ? "" : DEFAULT_MAPPER.writeValueAsString(evaluationResult);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         } catch (Exception e) {
