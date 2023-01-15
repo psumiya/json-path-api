@@ -16,6 +16,7 @@ public class JsonPathEvaluatorTest {
 
     static Stream<Arguments> testFilesProvider() {
         return Stream.of(
+                arguments(DEFAULT_ROOT + "function.json", "4"),
                 arguments(DEFAULT_ROOT + "withAllOptions.json", """
                 ["bar1",null]"""),
                 arguments(DEFAULT_ROOT + "withSomeOptions.json", """
