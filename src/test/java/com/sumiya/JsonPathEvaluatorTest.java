@@ -1,6 +1,8 @@
 package com.sumiya;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -16,7 +18,6 @@ public class JsonPathEvaluatorTest {
 
     static Stream<Arguments> testFilesProvider() {
         return Stream.of(
-                arguments(DEFAULT_ROOT + "function.json", "4"),
                 arguments(DEFAULT_ROOT + "withAllOptions.json", """
                 ["bar1",null]"""),
                 arguments(DEFAULT_ROOT + "withSomeOptions.json", """
@@ -45,4 +46,14 @@ public class JsonPathEvaluatorTest {
         assertEquals(expectedResult, evaluated);
     }
 
+    @Test
+    @DisplayName("shows-cache-failure-when-invoked-more-than-once")
+    public void testCache() {
+        String expectedResult = "4";
+        String json = FileReader.getFileContentAsString(DEFAULT_ROOT + "function.json");
+        for (int i = 0; i < 10; i++) {
+            String evaluated = fixture.evaluate(json);
+            assertEquals(expectedResult, evaluated);
+        }
+    }
 }

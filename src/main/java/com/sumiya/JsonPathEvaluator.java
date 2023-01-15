@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
+import com.jayway.jsonpath.spi.cache.CacheProvider;
+import com.jayway.jsonpath.spi.cache.NOOPCache;
 import com.sumiya.model.ErrorResponse;
 import com.sumiya.model.JsonEvaluatorRequest;
 
@@ -15,6 +17,13 @@ import java.util.Set;
 public class JsonPathEvaluator {
 
     private static final ObjectMapper DEFAULT_MAPPER = new ObjectMapper();
+
+    static {
+        // Disable caching since functions like length fail on repeated invocations (v2.7.0).
+        // To see how the app fails, comment below line that sets NOOPCache,
+        // then run JsonPathEvaluatorTest#testCache method.
+        CacheProvider.setCache(new NOOPCache());
+    }
 
     public String evaluate(String body) {
 
