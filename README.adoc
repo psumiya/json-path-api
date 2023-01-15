@@ -1,10 +1,5 @@
 = Json Path API
 
-:description: wrapper to invoke https://github.com/json-path/JsonPath methods via an API.
-:author: Sumiya
-:nofooter:
-:sectlinks:
-
 Wrapper to invoke https://github.com/json-path/JsonPath methods via an API.
 
 == Build and Deploy Commands
@@ -66,21 +61,7 @@ curl -X POST https://jsonpath.sumiya.page/jsonpath -H 'X-API-Key: <insert-api-ke
 }'
 ----
 
-== Online/Web User Interface
 If you intend to use a front-end, you may find this useful: https://github.com/psumiya/til/blob/main/OPTIONS/CORS.adoc
-
-Here is a web application that uses a customized API endpoint as described above: https://sumiya.page/jpath.html
-
-Source code for the web app here: https://github.com/psumiya/json-path-web
-
-With the above setup, the end to end flow for an API request from the linked html page is:
-
-User (submit) -> Browser (fetch) ->
-
-- Browser (OPTIONS/pre-flight) -> Route 53 (dns) -> API Gateway -> Custom Domain -> API mapping -> Endpoint (OPTIONS) -> Mock Response with CORS headers
-
-- Browser (POST) -> Route 53 (dns) -> API Gateway -> Custom Domain -> API mapping -> Endpoint (POST) -> Request Proxied to Lambda by API Gateway -> Processed Response Body and Headers
-
 
 == Runtime Evolution
 I wrote about how the JRE for this project evolved from Java 11 to a custom Java 19 runtime here: https://sumiya.page/aws-lambda-custom-runtime-with-java-and-gradle.html
