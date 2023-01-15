@@ -19,7 +19,7 @@ public class JsonPathEvaluator {
     private static final ObjectMapper DEFAULT_MAPPER = new ObjectMapper();
 
     static {
-        // Disable caching since functions like length fail on repeated invocations (v2.7.0).
+        // Disable caching since functions like `$.length()` fail on repeated invocations (v2.7.0).
         // To see how the app fails, comment below line that sets NOOPCache,
         // then run JsonPathEvaluatorTest#testCache method.
         CacheProvider.setCache(new NOOPCache());
