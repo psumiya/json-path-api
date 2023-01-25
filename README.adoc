@@ -1,6 +1,10 @@
 = Json Path API
 
-Wrapper to invoke https://github.com/json-path/JsonPath methods via an API.
+A Web API that wraps https://github.com/json-path/JsonPath library calls.
+
+*tl;dr*
+
+Client/Browser -> Amazon Route53 -> Amazon API Gateway -> AWS Lambda -> Jayway JsonPath Library
 
 == Build and Deploy Commands
 
