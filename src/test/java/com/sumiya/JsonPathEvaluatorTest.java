@@ -61,7 +61,8 @@ public class JsonPathEvaluatorTest {
     @DisplayName("ensure-path-list-option-works")
     public void testAsPathList() {
         String json = FileReader.getFileContentAsString(DEFAULT_ROOT + "functionAsPathList.json");
+        String expectedJson = FileReader.getFileContentAsString(DEFAULT_ROOT + "functionAsPathListResult.json");
         String evaluated = fixture.evaluate(json);
-        System.out.println(evaluated);
+        assertEquals(expectedJson, evaluated);
     }
 }
