@@ -65,7 +65,7 @@ curl -X POST https://jsonpath.sumiya.page/jsonpath -H 'X-API-Key: <insert-api-ke
 }'
 ----
 
-If you intend to use a front-end, you may find this useful: https://github.com/psumiya/til/blob/main/OPTIONS/CORS.adoc
+If you intend to use a front-end, you may find this useful: https://github.com/psumiya/til/blob/main/http/options/cors.adoc
 
 Here is a web application that uses a customized API endpoint as described above: https://sumiya.page/jpath.html
 
