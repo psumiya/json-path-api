@@ -17,7 +17,7 @@ dependencies {
     runtimeOnly 'com.amazonaws:aws-lambda-java-runtime-interface-client:2.1.1'
 
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
-    implementation 'com.jayway.jsonpath:json-path:2.7.0'
+    implementation 'com.jayway.jsonpath:json-path:2.8.0'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.1'
