@@ -16,8 +16,8 @@ Resources:
       FunctionName: JsonPathEvaluator
       CodeUri: s3://sumiya/lambdas/json-path/JsonPathEvaluator.zip
       Handler: com.sumiya.Handler::handleRequest
-      Runtime: provided.al2
-      Description: Java function
+      Runtime: java21
+      Description: Lambda to invoke methods on JsonPath Api
       MemorySize: 512
       Timeout: 10
       Policies:
