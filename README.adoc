@@ -70,4 +70,7 @@ If you intend to use a front-end, you may find this useful: https://github.com/p
 Here is a web application that uses a customized API endpoint as described above: https://sumiya.page/jpath.html
 
 == Runtime Evolution
-I wrote about how the JRE for this project evolved from Java 11 to a custom Java 19 runtime here: https://sumiya.page/aws-lambda-custom-runtime-with-java-and-gradle.html
+- Current Runtime: Java 21
+- Architecture: ARM64
+
+In the past, I wrote about how the JRE for this project evolved from Java 11 to a custom Java 19 runtime here: https://sumiya.page/aws-lambda-custom-runtime-with-java-and-gradle.html
