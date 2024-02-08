@@ -22,7 +22,7 @@ export S3_BUCKET=sumiya
 export S3_KEY=lambdas/json-path
 
 # Upload the built zip to S3
-aws s3 cp JsonPathEvaluator.zip s3://$S3_BUCKET/$S3_KEY/JsonPathEvaluator.zip
+aws s3 cp build/distributions/json-path-api-1.0-SNAPSHOT.zip s3://$S3_BUCKET/$S3_KEY/JsonPathEvaluator.zip
 
 # Create stack (one-time step) - this creates the Lambda function and the API Gateway endpoint (note it down)
 sam deploy --s3-bucket $S3_BUCKET --stack-name $STACK_NAME --capabilities CAPABILITY_IAM --template-file cloudformation/template.yaml
