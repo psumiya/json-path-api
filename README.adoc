@@ -13,7 +13,7 @@ To build and deploy into your own AWS account, follow this:
 [source]
 ----
 # Build the zip file that contains the artifacts necessary for the Lambda (you need Docker for this to run successfully)
-./build.sh
+./gradlew clean buildZip
 
 # Set S3 bucket and object where the zip will be uploaded
 export STACK_NAME=json-path-api-custom-j19
