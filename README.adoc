@@ -16,9 +16,9 @@ To build and deploy into your own AWS account, follow this:
 ./gradlew clean buildZip
 
 # Set S3 bucket and object where the zip will be uploaded
-export STACK_NAME=json-path-api-custom-j19
+export STACK_NAME=json-path-api
 # Use a bucket from your AWS account
-export S3_BUCKET=sumiya
+export S3_BUCKET=<YOUR-S3-BUCKET-NAME-HERE>
 export S3_KEY=lambdas/json-path
 
 # Upload the built zip to S3
@@ -38,7 +38,8 @@ aws cloudformation delete-stack --stack-name $STACK_NAME
 
 Replace the endpoint with the newly generated api in the below command and test.
 ----
-curl -X POST https://83dypaxnz0.execute-api.us-west-2.amazonaws.com/dev/jsonpath -H "Content-Type: application/json" -d \
+export API_URL=<YOUR_API_URL_HERE>
+curl $API_URL -H "Content-Type: application/json" -d \
 '{
   "jsonToEvaluate" : "[{\"foo\" : \"foo1\",\"bar\" : \"bar1\"}{\"foo\" : \"foo2\"}]",
   "pathExpression" : "$[*].bar",
@@ -46,30 +47,17 @@ curl -X POST https://83dypaxnz0.execute-api.us-west-2.amazonaws.com/dev/jsonpath
 }'
 ----
 
-== Customizing the API Endpoint
+You should see a successful result as shown below.
+```
+["bar1"]
+```
 
-Beyond the template used in this repo, it is possible to further customize the API.
-
-For example, a custom API domain was manually setup with the right certificate, and corresponding Route 53 records were created to route requests to this custom domain.
-
-That customized API is currently deployed here: `https://jsonpath.sumiya.page/jsonpath`. An API Key is needed to invoke this endpoint.
-
-Sample curl:
-
-----
-curl -X POST https://jsonpath.sumiya.page/jsonpath -H 'X-API-Key: <insert-api-key-here>' -H "Content-Type: application/json" -d \
-'{
-  "jsonToEvaluate" : "[{\"foo\" : \"foo1\",\"bar\" : \"bar1\"}{\"foo\" : \"foo2\"}]",
-  "pathExpression" : "$[*].bar",
-  "jsonPathOptions" : ["SUPPRESS_EXCEPTIONS","ALWAYS_RETURN_LIST"]
-}'
-----
 
 If you intend to use a front-end, you may find this useful: https://github.com/psumiya/til/blob/main/http/options/cors.adoc
 
 Here is a web application that uses a customized API endpoint as described above: https://sumiya.page/jpath.html
 
-== Runtime Evolution
+== Lambda Runtime
 - Current Runtime: Java 21
 - Architecture: ARM64
 
