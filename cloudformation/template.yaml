@@ -2,6 +2,11 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: An AWS Lambda application that wraps the JsonPath Api.
 
+Parameters:
+  LambdaCodeS3URI:
+    Type: String
+    Description: The S3 URI of the Lambda zip file.
+
 Resources:
 
   JsonPathAPIGateway:
@@ -14,7 +19,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: JsonPathEvaluator
-      CodeUri: s3://sumiya/lambdas/json-path/JsonPathEvaluator.zip
+      CodeUri: !Ref LambdaCodeS3URI
       Handler: com.sumiya.Handler::handleRequest
       Runtime: java21
       Architectures:
